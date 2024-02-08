@@ -28,9 +28,9 @@ the_data <-
 #  filtered_data <-
 #    the_data |>
 #    filter(
-#      include1 == 0,           # --
-#      include2 != 3,           # Exclusion criteria
-#      as.numeric(scale(include3)) > -2.5   # --
+#      include1 == 0,  # --
+#      include2 != 3,  # Exclusion criteria
+#      include3 > -2.5 # --
 #    )
 #  
 #  # Model the data
@@ -41,7 +41,7 @@ the_data <-
 
 ## ----filters------------------------------------------------------------------
 the_data |> 
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5)
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5)
 
 ## ----variables1---------------------------------------------------------------
 the_data |>
@@ -54,27 +54,27 @@ the_data |>
 
 ## ----building-----------------------------------------------------------------
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2)
 
 ## ----model--------------------------------------------------------------------
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm(dv1 ~ iv1 * mod))
 
 ## -----------------------------------------------------------------------------
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |>
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |>
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", "lm(dv1 ~ iv1 * mod)")
 
 ## -----------------------------------------------------------------------------
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  # add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm({dvs} ~ {ivs} * mod)) # see the {} here
@@ -82,7 +82,7 @@ the_data |>
 ## ----blueprint-diagram, fig.width=5.75, fig.height=6--------------------------
 full_pipeline <- 
   the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm({dvs} ~ {ivs} * mod))

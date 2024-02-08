@@ -58,9 +58,9 @@ We want to maximize our knowledge but we also want to be systematic. One approac
 filtered_data <- 
   the_data |> 
   filter(
-    include1 == 0,           # --
-    include2 != 3,           # Exclusion criteria
-    as.numeric(scale(include3)) > -2.5   # --
+    include1 == 0,  # --
+    include2 != 3,  # Exclusion criteria
+    include3 > -2.5 # --
   )
 
 # Model the data
@@ -86,7 +86,7 @@ Our example above has three exclusion criteria. If we don't know which are impor
 
 ```{r filters}
 the_data |> 
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5)
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5)
 ```
 
 The output above is a simple `tibble` (i.e., `data.frame`) containing three columns. 
@@ -134,7 +134,7 @@ For example, perhaps we want to explore our exclusion criteria alternatives acro
 
 ```{r building}
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2)
 ```
@@ -149,7 +149,7 @@ You can add a model to your blueprint by using `add_model()`. I designed `add_mo
 
 ```{r model}
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm(dv1 ~ iv1 * mod))
@@ -159,7 +159,7 @@ Above, the model is completely unquoted. It also has no `data` argument. This is
 
 ```{r}
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |>
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |>
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", "lm(dv1 ~ iv1 * mod)")
@@ -169,15 +169,15 @@ To make sure your `add_variables()` works properly, `add_model()` was designed t
 
 ```{r}
 the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  # add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm({dvs} ~ {ivs} * mod)) # see the {} here
 ```
 
-This allows `multitool` to insert the correct version of each variable specified in a `add_variables()` step. Make sure to use embrace the variable with the `var_group` argument from `add_variables()`, for example `add_model(lm({dvs} ~ {ivs} * mod))`. 
+This allows `multitool` to insert the correct version of each variable specified in a `add_variables()` step. Make sure to embrace the variable with the `var_group` argument from `add_variables()`, for example `add_model(lm({dvs} ~ {ivs} * mod))`. 
 
-Here, `{dvs}` and `{ivs}` tells `multitool` to insert the current version of the `ivs` and `dvs` into the model.
+Here, `dvs` and `ivs` tells `multitool` to insert the current version of the `ivs` and `dvs` into the model.
 
 ## Finalizing the specification blueprint
 
@@ -188,7 +188,7 @@ You can automate making a chart with `create_blueprint_graph()`. Feed your pipel
 ```{r blueprint-diagram, fig.width=5.75, fig.height=6}
 full_pipeline <- 
   the_data |>
-  add_filters(include1 == 0, include2 != 3, scale(include3) > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm({dvs} ~ {ivs} * mod))
@@ -206,7 +206,7 @@ expanded_pipeline
 
 The result is an expanded `tibble` with 1 row per unique decision and columns for each major blueprint category. In our example, we have alternative variables (predictors and outcomes), filters (three exclusion alternatives), and a model to run. 
 
-Note that we have 3 exclusions (each with two combinations), 3 versions of our predictor, and 2 versions of our outcome. This means our blueprint should have `2*2*2*3*2` or `r `2*2*2*3*2` rows, which corresponds with our expanded pipeline:
+Note that we have 3 exclusions (each with two combinations), 3 versions of our predictor, and 2 versions of our outcome. This means our blueprint should have `2*2*2*3*2` or `r 2*2*2*3*2` rows, which corresponds with our expanded pipeline:
 
 ```{r}
 2*2*2*3*2 == nrow(expanded_pipeline)
