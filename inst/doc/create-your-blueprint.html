@@ -27,6 +27,26 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">@layer htmltools {
+.html-fill-container {
+display: flex;
+flex-direction: column;
+
+min-height: 0;
+min-width: 0;
+}
+.html-fill-container > .html-fill-item {
+
+flex: 1 1 auto;
+min-height: 0;
+min-width: 0;
+}
+.html-fill-container > :not(.html-fill-item) {
+
+flex: 0 0 auto;
+}
+}
+</style>
 <script>(function() {
   // If window.HTMLWidgets is already defined, then use it; otherwise create a
   // new object. This allows preceding code to set options that affect the
@@ -1263,7 +1283,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -1274,7 +1294,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -1754,21 +1774,21 @@ argument.</p>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;ivs&quot;</span>, iv1, iv2, iv3) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;dvs&quot;</span>, dv1, dv2) <span class="sc">|&gt;</span> </span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">&quot;linear model&quot;</span>, <span class="fu">lm</span>(dv1 <span class="sc">~</span> iv1 <span class="sc">*</span> mod))</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 3</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;    type      group        code                          </span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                         </span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;  1 filters   include1     include1 == 0                 </span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt;  2 filters   include1     include1 %in% unique(include1)</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt;  3 filters   include2     include2 != 3                 </span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;  4 filters   include2     include2 %in% unique(include2)</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;  5 filters   include3     include3 &gt; -2.5               </span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt;  6 filters   include3     include3 %in% unique(include3)</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;  7 variables ivs          iv1                           </span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;  8 variables ivs          iv2                           </span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;  9 variables ivs          iv3                           </span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; 10 variables dvs          dv1                           </span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; 11 variables dvs          dv2                           </span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 12 models    linear model lm(dv1 ~ iv1 * mod)</span></span></code></pre></div>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 4</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;    type      group        code                           additional_args</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                          &lt;lgl&gt;          </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;  1 filters   include1     include1 == 0                  NA             </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt;  2 filters   include1     include1 %in% unique(include1) NA             </span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt;  3 filters   include2     include2 != 3                  NA             </span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;  4 filters   include2     include2 %in% unique(include2) NA             </span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;  5 filters   include3     include3 &gt; -2.5                NA             </span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt;  6 filters   include3     include3 %in% unique(include3) NA             </span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;  7 variables ivs          iv1                            NA             </span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;  8 variables ivs          iv2                            NA             </span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;  9 variables ivs          iv3                            NA             </span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; 10 variables dvs          dv1                            NA             </span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; 11 variables dvs          dv2                            NA             </span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 12 models    linear model lm(dv1 ~ iv1 * mod)            NA</span></span></code></pre></div>
 <p>Above, the model is completely unquoted. It also has no
 <code>data</code> argument. This is intentional; <code>multitool</code>
 is tracking the base dataset along the way (so you don’t have to). Note
@@ -1779,38 +1799,44 @@ style.</p>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;ivs&quot;</span>, iv1, iv2, iv3) <span class="sc">|&gt;</span> </span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;dvs&quot;</span>, dv1, dv2) <span class="sc">|&gt;</span> </span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">&quot;linear model&quot;</span>, <span class="st">&quot;lm(dv1 ~ iv1 * mod)&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 3</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;    type      group        code                          </span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                         </span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;  1 filters   include1     include1 == 0                 </span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;  2 filters   include1     include1 %in% unique(include1)</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt;  3 filters   include2     include2 != 3                 </span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt;  4 filters   include2     include2 %in% unique(include2)</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;  5 filters   include3     include3 &gt; -2.5               </span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;  6 filters   include3     include3 %in% unique(include3)</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;  7 variables ivs          iv1                           </span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;  8 variables ivs          iv2                           </span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;  9 variables ivs          iv3                           </span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 10 variables dvs          dv1                           </span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 11 variables dvs          dv2                           </span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 12 models    linear model lm(dv1 ~ iv1 * mod)</span></span></code></pre></div>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 4</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;    type      group        code                           additional_args</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                          &lt;lgl&gt;          </span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;  1 filters   include1     include1 == 0                  NA             </span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;  2 filters   include1     include1 %in% unique(include1) NA             </span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt;  3 filters   include2     include2 != 3                  NA             </span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt;  4 filters   include2     include2 %in% unique(include2) NA             </span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;  5 filters   include3     include3 &gt; -2.5                NA             </span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;  6 filters   include3     include3 %in% unique(include3) NA             </span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;  7 variables ivs          iv1                            NA             </span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;  8 variables ivs          iv2                            NA             </span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;  9 variables ivs          iv3                            NA             </span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 10 variables dvs          dv1                            NA             </span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 11 variables dvs          dv2                            NA             </span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 12 models    linear model lm(dv1 ~ iv1 * mod)            NA</span></span></code></pre></div>
 <p>To make sure your <code>add_variables()</code> works properly,
 <code>add_model()</code> was designed to interpret
 <code>glue::glue()</code> syntax. For example:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>the_data <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="co"># add_filters(include1 == 0, include2 != 3, include3 &gt; -2.5) |&gt; </span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">add_filters</span>(include1 <span class="sc">==</span> <span class="dv">0</span>, include2 <span class="sc">!=</span> <span class="dv">3</span>, include3 <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">2.5</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;ivs&quot;</span>, iv1, iv2, iv3) <span class="sc">|&gt;</span> </span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">add_variables</span>(<span class="at">var_group =</span> <span class="st">&quot;dvs&quot;</span>, dv1, dv2) <span class="sc">|&gt;</span> </span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">&quot;linear model&quot;</span>, <span class="fu">lm</span>({dvs} <span class="sc">~</span> {ivs} <span class="sc">*</span> mod)) <span class="co"># see the {} here</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;   type      group        code                   </span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                  </span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 1 variables ivs          iv1                    </span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 2 variables ivs          iv2                    </span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 3 variables ivs          iv3                    </span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; 4 variables dvs          dv1                    </span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 5 variables dvs          dv2                    </span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; 6 models    linear model lm({dvs} ~ {ivs} * mod)</span></span></code></pre></div>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 12 × 4</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;    type      group        code                           additional_args</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;                          &lt;lgl&gt;          </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  1 filters   include1     include1 == 0                  NA             </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;  2 filters   include1     include1 %in% unique(include1) NA             </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;  3 filters   include2     include2 != 3                  NA             </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;  4 filters   include2     include2 %in% unique(include2) NA             </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;  5 filters   include3     include3 &gt; -2.5                NA             </span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  6 filters   include3     include3 %in% unique(include3) NA             </span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  7 variables ivs          iv1                            NA             </span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt;  8 variables ivs          iv2                            NA             </span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt;  9 variables ivs          iv3                            NA             </span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; 10 variables dvs          dv1                            NA             </span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; 11 variables dvs          dv2                            NA             </span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; 12 models    linear model lm({dvs} ~ {ivs} * mod)        NA</span></span></code></pre></div>
 <p>This allows <code>multitool</code> to insert the correct version of
 each variable specified in a <code>add_variables()</code> step. Make
 sure to embrace the variable with the <code>var_group</code> argument
@@ -1837,11 +1863,12 @@ pipeline plan:</p>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">&quot;linear model&quot;</span>, <span class="fu">lm</span>({dvs} <span class="sc">~</span> {ivs} <span class="sc">*</span> mod))</span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="fu">create_blueprint_graph</span>(full_pipeline)</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; no descriptives</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; you have no preprocessing steps in your pipeline</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; you have no post processing steps in your pipeline</span></span></code></pre></div>
-<div class="grViz html-widget html-fill-item" id="htmlwidget-33f397e4bcc2b752ad60" style="width:552px;height:576px;"></div>
-<script type="application/json" data-for="htmlwidget-33f397e4bcc2b752ad60">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       splines = \"line\",\n       overlap = \"false\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"rect\",\n      fixedsize = \"false\",\n      width = \"0.5\",\n      style = \"rounded\",\n      fillcolor = \"aliceblue\",\n      color = \"gray\",\n      fontcolor = \"black\",\n      margin = \".25, 0\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\",\n     tailport = \"s\",\n     headport = \"n\",\n     concentrate = \"false\",\n     constraint = \"true\"]\n\n  \"1\" [label = <<BR/><B>Base Dataset<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>the_data<BR/> >] \n  \"2\" [label = <<BR/><B>Variables<\/B><BR/><BR/>2 sets<BR/>(2*3 = 6)<BR ALIGN=\"LEFT\"/> >] \n  \"3\" [label = <<BR/><B>dvs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; dv1<BR ALIGN=\"LEFT\"/>&#x2022; dv2<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>ivs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; iv1<BR ALIGN=\"LEFT\"/>&#x2022; iv2<BR ALIGN=\"LEFT\"/>&#x2022; iv3<BR ALIGN=\"LEFT\"/> >] \n  \"4\" [label = <<BR/><B>Filters<\/B><BR/><BR/>3 sets<BR/>(2*2*2 = 8)<BR ALIGN=\"LEFT\"/> >] \n  \"5\" [label = <<BR/><B>include1<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include1 equals 0<BR ALIGN=\"LEFT\"/>&#x2022; include1 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include2<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include2 does not equal 3<BR ALIGN=\"LEFT\"/>&#x2022; include2 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include3<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include3 bigger than -2.5<BR ALIGN=\"LEFT\"/>&#x2022; include3 is any value<BR ALIGN=\"LEFT\"/> >] \n  \"6\" [label = <<BR/><B>48 analysis datasets<\/B><BR/><BR/>filters (8) * variables (6)<BR ALIGN=\"LEFT\"/> >] \n  \"7\" [label = <<BR/><B>linear model<\/B><BR/><BR/>lm({dvs} ~ {ivs} * mod)<BR ALIGN=\"LEFT\"/> >] \n  \"8\" [label = <<BR/><B>48 fitted models<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>(2*2*2*2*3*1)<BR/> >] \n  \"1\" [label = <<BR/><B>Base Dataset<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>the_data<BR/> >] \nsubgraph{rank = same\n  \"2\" [label = <<BR/><B>Variables<\/B><BR/><BR/>2 sets<BR/>(2*3 = 6)<BR ALIGN=\"LEFT\"/> >] \n  \"3\" [label = <<BR/><B>dvs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; dv1<BR ALIGN=\"LEFT\"/>&#x2022; dv2<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>ivs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; iv1<BR ALIGN=\"LEFT\"/>&#x2022; iv2<BR ALIGN=\"LEFT\"/>&#x2022; iv3<BR ALIGN=\"LEFT\"/> >] \n  \"4\" [label = <<BR/><B>Filters<\/B><BR/><BR/>3 sets<BR/>(2*2*2 = 8)<BR ALIGN=\"LEFT\"/> >] \n  \"5\" [label = <<BR/><B>include1<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include1 equals 0<BR ALIGN=\"LEFT\"/>&#x2022; include1 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include2<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include2 does not equal 3<BR ALIGN=\"LEFT\"/>&#x2022; include2 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include3<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include3 bigger than -2.5<BR ALIGN=\"LEFT\"/>&#x2022; include3 is any value<BR ALIGN=\"LEFT\"/> >] }\n\n  \"6\" [label = <<BR/><B>48 analysis datasets<\/B><BR/><BR/>filters (8) * variables (6)<BR ALIGN=\"LEFT\"/> >] \n  \"7\" [label = <<BR/><B>linear model<\/B><BR/><BR/>lm({dvs} ~ {ivs} * mod)<BR ALIGN=\"LEFT\"/> >] \n  \"8\" [label = <<BR/><B>48 fitted models<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>(2*2*2*2*3*1)<BR/> >] \n\"3\"->\"2\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"2\"->\"4\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"4\"->\"5\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"1\"->\"4\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"1\"->\"2\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"3\"->\"2\" [style = \"solid\", arrowhead = \"none\", arrowtail = \"none\", headport = \"w\", tailport = \"e\"] \n\"4\"->\"5\" [style = \"solid\", arrowhead = \"none\", arrowtail = \"none\", headport = \"w\", tailport = \"e\"] \n\"2\"->\"6\" [tailport = \"e\", tailport = \"e\", tailport = \"e\", headport = \"n\", tailport = \"s\"] \n\"4\"->\"6\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"6\"->\"7\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"7\"->\"8\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; No subgroups in your pipeline</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; no descriptives</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; you have no preprocessing steps in your pipeline</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; you have no post processing steps in your pipeline</span></span></code></pre></div>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-24628d7c0b0395d0bfb6" style="width:552px;height:576px;"></div>
+<script type="application/json" data-for="htmlwidget-24628d7c0b0395d0bfb6">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       splines = \"line\",\n       overlap = \"false\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"rect\",\n      fixedsize = \"false\",\n      width = \"0.5\",\n      style = \"rounded\",\n      fillcolor = \"aliceblue\",\n      color = \"gray\",\n      fontcolor = \"black\",\n      margin = \".25, 0\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\",\n     tailport = \"s\",\n     headport = \"n\",\n     concentrate = \"false\",\n     constraint = \"true\"]\n\n  \"1\" [label = <<BR/><B>Base Dataset<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>the_data<BR/> >] \n  \"2\" [label = <<BR/><B>Variables<\/B><BR/><BR/>2 sets<BR/>(2*3 = 6)<BR ALIGN=\"LEFT\"/> >] \n  \"3\" [label = <<BR/><B>dvs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; dv1<BR ALIGN=\"LEFT\"/>&#x2022; dv2<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>ivs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; iv1<BR ALIGN=\"LEFT\"/>&#x2022; iv2<BR ALIGN=\"LEFT\"/>&#x2022; iv3<BR ALIGN=\"LEFT\"/> >] \n  \"4\" [label = <<BR/><B>Filters<\/B><BR/><BR/>3 sets<BR/>(2*2*2 = 8)<BR ALIGN=\"LEFT\"/> >] \n  \"5\" [label = <<BR/><B>include1<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include1 equals 0<BR ALIGN=\"LEFT\"/>&#x2022; include1 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include2<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include2 does not equal 3<BR ALIGN=\"LEFT\"/>&#x2022; include2 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include3<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include3 bigger than -2.5<BR ALIGN=\"LEFT\"/>&#x2022; include3 is any value<BR ALIGN=\"LEFT\"/> >] \n  \"6\" [label = <<BR/><B>48 analysis datasets<\/B><BR/><BR/>filters (8) * variables (6)<BR ALIGN=\"LEFT\"/> >] \n  \"7\" [label = <<BR/><B>linear model<\/B><BR/><BR/>lm({dvs} ~ {ivs} * mod)<BR ALIGN=\"LEFT\"/> >] \n  \"8\" [label = <<BR/><B>48 fitted models<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>(2*2*2*2*3*1)<BR/> >] \n  \"1\" [label = <<BR/><B>Base Dataset<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>the_data<BR/> >] \nsubgraph{rank = same\n  \"2\" [label = <<BR/><B>Variables<\/B><BR/><BR/>2 sets<BR/>(2*3 = 6)<BR ALIGN=\"LEFT\"/> >] \n  \"3\" [label = <<BR/><B>dvs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; dv1<BR ALIGN=\"LEFT\"/>&#x2022; dv2<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>ivs<\/B><BR ALIGN=\"LEFT\"/>&#x2022; iv1<BR ALIGN=\"LEFT\"/>&#x2022; iv2<BR ALIGN=\"LEFT\"/>&#x2022; iv3<BR ALIGN=\"LEFT\"/> >] \n  \"4\" [label = <<BR/><B>Filters<\/B><BR/><BR/>3 sets<BR/>(2*2*2 = 8)<BR ALIGN=\"LEFT\"/> >] \n  \"5\" [label = <<BR/><B>include1<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include1 equals 0<BR ALIGN=\"LEFT\"/>&#x2022; include1 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include2<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include2 does not equal 3<BR ALIGN=\"LEFT\"/>&#x2022; include2 is any value<BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/><B>include3<\/B><BR ALIGN=\"LEFT\"/>&#x2022; include3 bigger than -2.5<BR ALIGN=\"LEFT\"/>&#x2022; include3 is any value<BR ALIGN=\"LEFT\"/> >] }\n\n  \"6\" [label = <<BR/><B>48 analysis datasets<\/B><BR/><BR/>filters (8) * variables (6)<BR ALIGN=\"LEFT\"/> >] \n  \"7\" [label = <<BR/><B>linear model<\/B><BR/><BR/>lm({dvs} ~ {ivs} * mod)<BR ALIGN=\"LEFT\"/> >] \n  \"8\" [label = <<BR/><B>48 fitted models<\/B><BR ALIGN=\"LEFT\"/><BR ALIGN=\"LEFT\"/>(2*2*2*2*3*1)<BR/> >] \n\"3\"->\"2\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"2\"->\"4\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"4\"->\"5\" [style = \"invis\", style = \"invis\", style = \"invis\", headport = \"n\", tailport = \"s\"] \n\"1\"->\"4\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"1\"->\"2\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"3\"->\"2\" [style = \"solid\", arrowhead = \"none\", arrowtail = \"none\", headport = \"w\", tailport = \"e\"] \n\"4\"->\"5\" [style = \"solid\", arrowhead = \"none\", arrowtail = \"none\", headport = \"w\", tailport = \"e\"] \n\"2\"->\"6\" [tailport = \"e\", tailport = \"e\", tailport = \"e\", headport = \"n\", tailport = \"s\"] \n\"4\"->\"6\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"6\"->\"7\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n\"7\"->\"8\" [tailport = \"s\", tailport = \"s\", tailport = \"s\", headport = \"n\", tailport = \"s\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The final step in making your blueprint is expanding all your
 specifications into all possible combinations. You can do this by
 calling <code>expand_decisions()</code> at the end of your blueprint
@@ -1852,16 +1879,16 @@ pipeline:</p>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 48 × 4</span></span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;    decision variables        filters          models          </span></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;list&gt;           &lt;list&gt;           &lt;list&gt;          </span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  1 1        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  2 2        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  3 3        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  4 4        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  5 5        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  6 6        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;  7 7        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;  8 8        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;  9 9        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; 10 10       &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 2]&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  1 1        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  2 2        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  3 3        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  4 4        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  5 5        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  6 6        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;  7 7        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;  8 8        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;  9 9        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; 10 10       &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; &lt;tibble [1 × 3]&gt;</span></span>
 <span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more rows</span></span></code></pre></div>
 <p>The result is an expanded <code>tibble</code> with 1 row per unique
 decision and columns for each major blueprint category. In our example,
@@ -1894,38 +1921,38 @@ look at the filters:</p>
 <span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more rows</span></span></code></pre></div>
 <p>Or we could look at the models:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>expanded_pipeline <span class="sc">|&gt;</span> <span class="fu">unnest</span>(models)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 48 × 5</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt;    decision variables        filters          model               model_meta  </span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;list&gt;           &lt;list&gt;           &lt;chr&gt;               &lt;chr&gt;       </span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;  1 1        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * mod) linear model</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;  2 2        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * mod) linear model</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;  3 3        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * mod) linear model</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;  4 4        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * mod) linear model</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;  5 5        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv3 * mod) linear model</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;  6 6        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv3 * mod) linear model</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt;  7 7        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * mod) linear model</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;  8 8        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * mod) linear model</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;  9 9        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * mod) linear model</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 10 10       &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * mod) linear model</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 48 × 6</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt;    decision variables        filters          model        model_meta model_args</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;list&gt;           &lt;list&gt;           &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;     </span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;  1 1        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;  2 2        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;  3 3        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;  4 4        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;  5 5        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;  6 6        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt;  7 7        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt;  8 8        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;  9 9        &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv… linear mo… &quot;&quot;        </span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 10 10       &lt;tibble [1 × 2]&gt; &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv… linear mo… &quot;&quot;        </span></span>
 <span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more rows</span></span></code></pre></div>
 <p>Notice that, with the <code>glue::glue()</code> syntax, different
 versions of our predictors and outcomes were inserted appropriately. You
 can check their correspondence by using <code>unnest()</code> on both
 the models and variable list columns:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>expanded_pipeline <span class="sc">|&gt;</span> <span class="fu">unnest</span>(<span class="fu">c</span>(variables, models))</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 48 × 6</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt;    decision ivs   dvs   filters          model               model_meta  </span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;list&gt;           &lt;chr&gt;               &lt;chr&gt;       </span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt;  1 1        iv1   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * mod) linear model</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt;  2 2        iv1   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * mod) linear model</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt;  3 3        iv2   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * mod) linear model</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;  4 4        iv2   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * mod) linear model</span></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt;  5 5        iv3   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv3 * mod) linear model</span></span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt;  6 6        iv3   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv3 * mod) linear model</span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt;  7 7        iv1   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * mod) linear model</span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt;  8 8        iv1   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * mod) linear model</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt;  9 9        iv2   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * mod) linear model</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt; 10 10       iv2   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * mod) linear model</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 48 × 7</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt;    decision ivs   dvs   filters          model             model_meta model_args</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;list&gt;           &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;     </span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt;  1 1        iv1   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt;  2 2        iv1   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt;  3 3        iv2   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;  4 4        iv2   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt;  5 5        iv3   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv3 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt;  6 6        iv3   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv3 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt;  7 7        iv1   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv1 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt;  8 8        iv1   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv1 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt;  9 9        iv2   dv1   &lt;tibble [1 × 3]&gt; lm(dv1 ~ iv2 * m… linear mo… &quot;&quot;        </span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt; 10 10       iv2   dv2   &lt;tibble [1 × 3]&gt; lm(dv2 ~ iv2 * m… linear mo… &quot;&quot;        </span></span>
 <span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 38 more rows</span></span></code></pre></div>
 </div>
 <div id="going-further" class="section level2">

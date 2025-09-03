@@ -79,7 +79,7 @@ reveal <- function(.multi, .what, .which = NULL, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models")))
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -91,7 +91,7 @@ reveal <- function(.multi, .what, .which = NULL, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
       dplyr::select(-dplyr::any_of("model")) |>
       dplyr::rename_with(~ stringr::str_remove(.x, "_.*"), dplyr::any_of("model_meta")) |>
       tidyr::pivot_longer(-decision, names_to = "decision_set", values_to = "alternatives")
@@ -114,7 +114,7 @@ reveal <- function(.multi, .what, .which = NULL, .unpack_specs = "no"){
 #'
 #' @param .multi a multiverse list-column \code{tibble} produced by
 #'   \code{\link{run_multiverse}}.
-#' @param parameter_key character, if you added parameter keys to your pipeline,
+#' @param effect_key character, if you added parameter keys to your pipeline,
 #'   you can specify if you would like filter the parameters using one of your
 #'   parameter keys. This is useful when different variables are being switched
 #'   out across the multiverse but represent the same effect of interest.
@@ -169,16 +169,16 @@ reveal <- function(.multi, .what, .which = NULL, .unpack_specs = "no"){
 #' # Reveal results of the linear model
 #' the_multiverse |>
 #'   reveal_model_parameters()
-reveal_model_parameters <- function(.multi, parameter_key = NULL, .unpack_specs = "no"){
+reveal_model_parameters <- function(.multi, effect_key = NULL, .unpack_specs = "no"){
   unpacked <-
     .multi |>
     tidyr::unnest(model_fitted) |>
     tidyr::unnest(model_parameters)
 
-  if(!is.null(parameter_key)){
+  if(!is.null(effect_key)){
     unpacked <-
       unpacked |>
-      dplyr::filter(parameter_key == parameter_key)
+      dplyr::filter(stringr::str_detect(parameter_key, effect_key))
   }
 
   if(.unpack_specs == "wide"){
@@ -189,7 +189,7 @@ reveal_model_parameters <- function(.multi, parameter_key = NULL, .unpack_specs 
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models")))
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -201,8 +201,8 @@ reveal_model_parameters <- function(.multi, parameter_key = NULL, .unpack_specs 
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
-      dplyr::select(-model) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
+      dplyr::select(-model, -model_args) |>
       dplyr::rename(model = model_meta) |>
       tidyr::pivot_longer(
         -decision,
@@ -292,7 +292,7 @@ reveal_model_performance <- function(.multi, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::everything())
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -304,8 +304,8 @@ reveal_model_performance <- function(.multi, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
-      dplyr::select(-model) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
+      dplyr::select(-model, -model_args) |>
       dplyr::rename(model = model_meta) |>
       tidyr::pivot_longer(
         -decision,
@@ -405,8 +405,8 @@ reveal_model_warnings <- function(.multi, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
-      dplyr::select(-model) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
+      dplyr::select(-model, -model_args) |>
       dplyr::rename(model = model_meta) |>
       tidyr::pivot_longer(
         -decision,
@@ -507,8 +507,8 @@ reveal_model_messages <- function(.multi, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
-      dplyr::select(-model) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
+      dplyr::select(-model, -model_args) |>
       dplyr::rename(model = model_meta) |>
       tidyr::pivot_longer(
         -decision,
@@ -581,7 +581,8 @@ reveal_model_messages <- function(.multi, .unpack_specs = "no"){
 #'   add_correlations("predictor correlations", starts_with("iv")) |>
 #'   add_summary_stats("iv_stats", starts_with("iv"), c("mean", "sd")) |>
 #'   add_reliabilities("vio_scale", starts_with("iv")) |>
-#'   add_model("linear model", lm({dvs} ~ {ivs} * mod))
+#'   add_model("linear model", lm({dvs} ~ {ivs} * mod)) |>
+#'   expand_decisions()
 #'
 #' my_descriptives <- run_descriptives(full_pipeline)
 #'
@@ -604,7 +605,7 @@ reveal_summary_stats <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models")))
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -616,7 +617,7 @@ reveal_summary_stats <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
       dplyr::select(-dplyr::any_of("model")) |>
       dplyr::rename_with(~ stringr::str_remove(.x, "_.*"), dplyr::any_of("model_meta")) |>
       tidyr::pivot_longer(-decision, names_to = "decision_set", values_to = "alternatives")
@@ -686,7 +687,8 @@ reveal_summary_stats <- function(.descriptives, .which, .unpack_specs = "no"){
 #'   add_correlations("predictors", starts_with("iv")) |>
 #'   add_summary_stats("iv_stats", starts_with("iv"), c("mean", "sd")) |>
 #'   add_reliabilities("vio_scale", starts_with("iv")) |>
-#'   add_model("linear model", lm({dvs} ~ {ivs} * mod))
+#'   add_model("linear model", lm({dvs} ~ {ivs} * mod)) |>
+#'   expand_decisions()
 #'
 #' my_descriptives <- run_descriptives(full_pipeline)
 #'
@@ -709,7 +711,7 @@ reveal_corrs <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models")))
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -721,7 +723,7 @@ reveal_corrs <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
       dplyr::select(-dplyr::any_of("model")) |>
       dplyr::rename_with(~ stringr::str_remove(.x, "_.*"), dplyr::any_of("model_meta")) |>
       tidyr::pivot_longer(-decision, names_to = "decision_set", values_to = "alternatives")
@@ -790,7 +792,8 @@ reveal_corrs <- function(.descriptives, .which, .unpack_specs = "no"){
 #'   add_correlations("predictor correlations", starts_with("iv")) |>
 #'   add_summary_stats("iv_stats", starts_with("iv"), c("mean", "sd")) |>
 #'   add_reliabilities("vio_scale", starts_with("iv")) |>
-#'   add_model("linear model", lm({dvs} ~ {ivs} * mod))
+#'   add_model("linear model", lm({dvs} ~ {ivs} * mod)) |>
+#'   expand_decisions()
 #'
 #' my_descriptives <- run_descriptives(full_pipeline)
 #'
@@ -813,7 +816,7 @@ reveal_reliabilities <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models")))
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models")))
   }
 
   if(.unpack_specs == "long"){
@@ -825,7 +828,7 @@ reveal_reliabilities <- function(.descriptives, .which, .unpack_specs = "no"){
         -dplyr::any_of(
           c("preprocess","postprocess","corrs","summary_stats","reliabilities"))
       ) |>
-      tidyr::unnest(dplyr::any_of(c("variables","filters","models"))) |>
+      tidyr::unnest(dplyr::any_of(c("subgroups","variables","filters","models"))) |>
       dplyr::select(-dplyr::any_of("model")) |>
       dplyr::rename_with(~ stringr::str_remove(.x, "_.*"), dplyr::any_of("model_meta")) |>
       tidyr::pivot_longer(-decision, names_to = "decision_set", values_to = "alternatives")
@@ -845,7 +848,7 @@ reveal_reliabilities <- function(.descriptives, .which, .unpack_specs = "no"){
 #' Summarize multiverse parameters
 #'
 #' @param .unpacked an unpacked (with \code{\link{reveal}} or
-#'   \code{\link{unnest}}) multiverse dataset.
+#'   \code{tidyr::unnest}) multiverse dataset.
 #' @param .what a specific column to summarize. This could be a model estimate,
 #'   a summary statistic, correlation, or any other estimate computed over the
 #'   multiverse.
@@ -904,7 +907,7 @@ reveal_reliabilities <- function(.descriptives, .which, .unpack_specs = "no"){
 #' the_multiverse |>
 #'   reveal_model_parameters() |>
 #'   filter(str_detect(parameter, "iv")) |>
-#'   condense(coefficient, list(mean = mean, median = median))
+#'   condense(unstd_coef, list(mean = mean, median = median))
 condense <- function(.unpacked, .what, .how, .group = NULL, list_cols = TRUE){
 
   if(list_cols){

@@ -53,6 +53,14 @@ utils::globalVariables(
     "v1",
     "v2",
     "value",
-    "vcov"
-  )
+    "vcov",
+    "subgroups",
+    "coefficient",
+    "ci",
+    "ci_low",
+    "ci_high",
+    "std_coefficient",
+    "additional_args",
+    "model_args"
+    )
 )

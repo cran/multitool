@@ -24,20 +24,20 @@ the_data <-
   )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # Filter out exclusions
-#  filtered_data <-
-#    the_data |>
-#    filter(
-#      include1 == 0,  # --
-#      include2 != 3,  # Exclusion criteria
-#      include3 > -2.5 # --
-#    )
-#  
-#  # Model the data
-#  my_model <- lm(dv1 ~ iv1 * mod, data = filtered_data)
-#  
-#  # Check the results
-#  my_results <- parameters::parameters(my_model)
+# # Filter out exclusions
+# filtered_data <-
+#   the_data |>
+#   filter(
+#     include1 == 0,  # --
+#     include2 != 3,  # Exclusion criteria
+#     include3 > -2.5 # --
+#   )
+# 
+# # Model the data
+# my_model <- lm(dv1 ~ iv1 * mod, data = filtered_data)
+# 
+# # Check the results
+# my_results <- parameters::parameters(my_model)
 
 ## ----filters------------------------------------------------------------------
 the_data |> 
@@ -74,7 +74,7 @@ the_data |>
 
 ## -----------------------------------------------------------------------------
 the_data |>
-  # add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
+  add_filters(include1 == 0, include2 != 3, include3 > -2.5) |> 
   add_variables(var_group = "ivs", iv1, iv2, iv3) |> 
   add_variables(var_group = "dvs", dv1, dv2) |> 
   add_model("linear model", lm({dvs} ~ {ivs} * mod)) # see the {} here

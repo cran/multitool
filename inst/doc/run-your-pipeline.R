@@ -86,18 +86,18 @@ multiverse_results |>
 multiverse_results |>
   reveal_model_parameters() |> 
   filter(str_detect(parameter, "iv")) |>
-  condense(coefficient, list(mean = mean, median = median))
+  condense(unstd_coef, list(mean = mean, median = median))
 
 ## ----group_by-condense1-------------------------------------------------------
 multiverse_results |>
   reveal_model_parameters(.unpack_specs = "wide") |> 
   filter(str_detect(parameter, "iv")) |>
   group_by(ivs, dvs) |>
-  condense(coefficient, list(mean = mean, median = median))
+  condense(unstd_coef, list(mean = mean, median = median))
 
 ## ----group_by-condense2-------------------------------------------------------
 multiverse_results |>
   reveal_model_parameters(.unpack_specs = "wide") |> 
   group_by(parameter, dvs) |>
-  condense(coefficient, list(mean = mean, median = median))
+  condense(unstd_coef, list(mean = mean, median = median))
 

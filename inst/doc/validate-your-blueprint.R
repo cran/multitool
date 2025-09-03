@@ -53,8 +53,8 @@ expanded_pipeline <- expand_decisions(full_pipeline)
 
 ## -----------------------------------------------------------------------------
 # Take a look at the first filter decision
-expanded_pipeline |> show_code_filter(decision_num = 1)
+expanded_pipeline |> show_code_filter(decision_num = 1, console = FALSE)
 
 ## -----------------------------------------------------------------------------
-expanded_pipeline |> show_code_model(decision_num = 17)
+expanded_pipeline |> show_code_model(decision_num = 17, console = FALSE)
 

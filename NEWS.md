@@ -1,4 +1,14 @@
-# multitool 0.1.4
+# multitool (development version)
+
+# multitool 0.1.5
+
+* Added subgroup functionality with `add_subgroups()`
+* Updated `show_code_*` functions with an option to run code in the console
+* Updated `create_blueprint_graph()` to visualize subgroups if they exist
+* Updated `reveal_*` functions to show subgroup specs, if they exist
+* Fixed an issue with `add_parameters()`
+* Added a parallel option for `run_multiverse()` via `{furrr}`
+* Calculate standardized coefficients by default 
 
 # multitool 0.1.4
 
